@@ -30,13 +30,17 @@ dependencies {
 // Additional config for Crio workspace
 buildDir = '/tmp/external_build'
 
-task startScript(type:Exec) {
+task gitConfig(type:Exec) {
+    // This is ensures correct merge driver (Along with the zalenium run setup)
+    commandLine'git', 'config', '--local', 'merge.autoselect-nonempty.driver', '__CRIO__/merge_drivers/autoselect-nonempty %O %A %B %P'
+}
+
+task runZalenium(type:Exec) {   
     commandLine '../selenium-run.sh'
 }
 
-run.dependsOn startScript
-
-test.dependsOn startScript
+run.dependsOn gitConfig, runZalenium
+test.dependsOn gitConfig, runZalenium
 
 test {
     useTestNG() {
