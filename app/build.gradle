@@ -32,7 +32,7 @@ buildDir = '/tmp/external_build'
 
 task gitConfig(type:Exec) {
     // This is ensures correct merge driver (Along with the zalenium run setup)
-    commandLine 'git', 'config', '--local', 'merge.autoselect-nonempty.driver', '\'chmod +x __CRIO__/merge_drivers/autoselect-nonempty && __CRIO__/merge_drivers/autoselect-nonempty %O %A %B %P\''
+    commandLine 'git', 'config', '--local', 'merge.autoselect-nonempty.driver', 'chmod +x __CRIO__/merge_drivers/autoselect-nonempty && __CRIO__/merge_drivers/autoselect-nonempty %O %A %B %P'
 }
 
 task runZalenium(type:Exec) {   
