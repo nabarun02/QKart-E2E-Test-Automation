@@ -1,10 +1,22 @@
 package QKART_SANITY_LOGIN.Module1;
 
+<<<<<<< ours
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
+=======
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+>>>>>>> theirs
 
 public class Login {
     RemoteWebDriver driver;
@@ -52,7 +64,11 @@ public class Login {
         try {
             // Find the username label (present on the top right of the page)
             WebElement username_label;
+<<<<<<< ours
              username_label = this.driver.findElement(By.className("username-text"));
+=======
+            username_label = this.driver.findElement(By.className("username-text"));
+>>>>>>> theirs
             return username_label.getText().equals(Username);
         } catch (Exception e) {
             return false;
