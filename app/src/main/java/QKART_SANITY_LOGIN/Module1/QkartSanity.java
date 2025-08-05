@@ -3,15 +3,6 @@
  */
 package QKART_SANITY_LOGIN.Module1;
 
-<<<<<<< ours
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.concurrent.TimeUnit;
-
-import org.openqa.selenium.remote.BrowserType;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
-=======
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -31,7 +22,6 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
->>>>>>> theirs
 
 public class QkartSanity {
 
@@ -128,15 +118,6 @@ public class QkartSanity {
         return !status;
     }
 
-<<<<<<< ours
-    public static void main(String[] args) throws InterruptedException, MalformedURLException {
-        
-        int totalTests = 0;
-        int passedTests = 0;
-        Boolean status;
-
-        RemoteWebDriver driver = createDriver();
-=======
     /*
      * Verify the functinality of the search text box
      */
@@ -349,12 +330,39 @@ public class QkartSanity {
         // TODO: CRIO_TASK_MODULE_TEST_AUTOMATION - TEST CASE 06: MILESTONE 5
 
         // TODO: Register a new user
+        registration.navigateToRegisterPage();
+
+        // Register a new user
+        status = registration.registerUser("testUser", "abc@123", true);
+        if (!status) {
+            logStatus("TestCase 6", "Test Case Failure. Happy Flow Test Failed", "FAIL");
+        }
+
+        // Save the username of the newly registered user
+        lastGeneratedUserName = registration.lastGeneratedUsername;
 
         // TODO: Login using the newly registed user
+
+        login.navigateToLoginPage();
+
+        // Login with the newly registered user's credentials
+        status = login.PerformLogin(lastGeneratedUserName, "abc@123");
+        if (!status) {
+            logStatus("Step Failure", "User Perform Login Failed", status ? "PASS" : "FAIL");
+            logStatus("End TestCase", "Test Case 5: Happy Flow Test Failed : ", status ? "PASS" : "FAIL");
+        }
 
         // TODO: Add "Xtend Smart Watch" to cart
 
         // TODO: Add "Yarine Floor Lamp" to cart
+
+        homePage.navigateToHome();
+
+        // Find required products by searching and add them to the user's cart
+        status = homePage.searchForProduct("Xtend Smart Watch");
+        homePage.addProductToCart("Xtend Smart Watch");
+        status = homePage.searchForProduct("Yarine Floor Lamp");
+        homePage.addProductToCart("Yarine Floor Lamp");
 
         // update watch quantity to 2
         homePage.changeProductQuantityinCart("Xtend Smart Watch", 2);
@@ -445,7 +453,8 @@ public class QkartSanity {
         int totalTests = 0;
         int passedTests = 0;
         Boolean status;
->>>>>>> theirs
+
+        RemoteWebDriver driver = createDriver();
         // Maximize and Implicit Wait for things to initailize
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
@@ -468,50 +477,51 @@ public class QkartSanity {
             }
 
             System.out.println("");
-            // Execute Test Case 3
-            // totalTests += 1;
-            // status = TestCase03(driver);
-            // if (status) {
-            // passedTests += 1;
-            // }
 
-            // System.out.println("");
+            // Execute Test Case 3
+            totalTests += 1;
+            status = TestCase03(driver);
+            if (status) {
+            passedTests += 1;
+            }
+
+            System.out.println("");
 
             // Execute Test Case 4
-            // totalTests += 1;
-            // status = TestCase04(driver);
-            // if (status) {
-            // passedTests += 1;
-            // }
+            totalTests += 1;
+            status = TestCase04(driver);
+            if (status) {
+            passedTests += 1;
+            }
 
-            // System.out.println("");
+            System.out.println("");
 
             // Execute Test Case 5
-            // totalTests += 1;
-            // status = TestCase05(driver);
-            // if (status) {
-            // passedTests += 1;
-            // }
+            totalTests += 1;
+            status = TestCase05(driver);
+            if (status) {
+            passedTests += 1;
+            }
 
-            // System.out.println("");
+            System.out.println("");
 
             // Execute Test Case 6
-            // totalTests += 1;
-            // status = TestCase06(driver);
-            // if (status) {
-            // passedTests += 1;
-            // }
+            totalTests += 1;
+            status = TestCase06(driver);
+            if (status) {
+            passedTests += 1;
+            }
 
-            // System.out.println("");
+            System.out.println("");
 
             // Execute Test Case 7
-            // totalTests += 1;
-            // status = TestCase07(driver);
-            // if (status) {
-            // passedTests += 1;
-            // }
+            totalTests += 1;
+            status = TestCase07(driver);
+            if (status) {
+            passedTests += 1;
+            }
 
-            // System.out.println("");
+            System.out.println("");
 
 
         } catch (Exception e) {

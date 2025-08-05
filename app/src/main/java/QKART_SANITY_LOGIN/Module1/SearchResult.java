@@ -26,7 +26,10 @@ public class SearchResult {
         // TODO: CRIO_TASK_MODULE_TEST_AUTOMATION - TEST CASE 03: MILESTONE 1
         // Find the element containing the title (product name) of the search result and
         // assign the extract title text to titleOfSearchResult
+        titleOfSearchResult = this.parentElement.findElement(By.xpath(".//p[1]")).getText().trim();
+
         return titleOfSearchResult;
+
     }
 
     /*
@@ -37,7 +40,15 @@ public class SearchResult {
 
             // TODO: CRIO_TASK_MODULE_TEST_AUTOMATION - TEST CASE 04: MILESTONE 2
             // Find the link of size chart in the parentElement and click on it
+
+            WebElement sizeChartButton = this.parentElement.findElement(By.xpath("./button"));
+
+            sizeChartButton.click();
+
+            Thread.sleep(2000);
+
             return true;
+
         } catch (Exception e) {
             System.out.println("Exception while opening Size chart: " + e.getMessage());
             return false;
@@ -69,13 +80,24 @@ public class SearchResult {
     public Boolean verifySizeChartExists() {
         Boolean status = false;
         try {
+           
             // TODO: CRIO_TASK_MODULE_TEST_AUTOMATION - TEST CASE 04: MILESTONE 2
             /*
              * Check if the size chart element exists. If it exists, check if the text of
              * the element is "SIZE CHART". If the text "SIZE CHART" matches for the
              * element, set status = true , else set to false
              */
+
+             WebElement sizeChartButton = this.parentElement.findElement(By.xpath(".//button"));
+
+             if(sizeChartButton.isDisplayed()){
+                if(sizeChartButton.getText().trim().equals("SIZE CHART")){
+                    status = true;
+                }
+             }
+
             return status;
+
         } catch (Exception e) {
             return status;
         }
@@ -99,6 +121,47 @@ public class SearchResult {
              * Validate that the contents of expectedTableBody are present in the table body
              * in the same order
              */
+
+            List<WebElement> headers = driver.findElements(By.xpath("//table//thead//tr//th"));
+
+            int i, j, rows, columns;
+
+            columns = expectedTableHeaders.size();
+
+            for(i = 0; i < columns; i++){
+            
+                if(!headers.get(i).getText().trim().equals(expectedTableHeaders.get(i))){
+                    
+                    return false;
+
+                }
+
+            }
+
+
+            String content = "";
+
+            rows = expectedTableBody.size();
+
+            for(i = 0; i < rows; i++){
+
+                columns = expectedTableBody.get(i).size();
+
+                for(j = 0; j < columns; j++){
+
+                    int uiI = i+1;
+                    int uiJ = j+1;
+
+                    content = driver.findElement(By.xpath("//table//tbody//tr["+uiI+"]//td["+uiJ+"]")).getText().trim();
+
+                    if(!content.equals(expectedTableBody.get(i).get(j))){
+                        return false;
+                    }
+
+                }
+            
+            }
+
             return status;
 
         } catch (Exception e) {
@@ -115,7 +178,13 @@ public class SearchResult {
         try {
             // TODO: CRIO_TASK_MODULE_TEST_AUTOMATION - TEST CASE 04: MILESTONE 2
             // If the size dropdown exists and is displayed return true, else return false
+
+            if(driver.findElement(By.xpath("//select[contains(@id,'uncontrolled-native')]")).isDisplayed()){
+                status = true;
+            }
+
             return status;
+
         } catch (Exception e) {
             return status;
         }

@@ -32,7 +32,29 @@ public class Checkout {
              * Click on the "Add new address" button, enter the addressString in the address
              * text box and click on the "ADD" button to save the address
              */
+
+            WebElement addNewAddress = driver.findElement(By.xpath("//button[contains(@id,'add-new-btn')]"));
+
+            if(addNewAddress.isEnabled()){
+
+                addNewAddress.click();
+                
+                driver.findElement(By.xpath("//textarea[contains(@placeholder,'Enter your complete address')]")).sendKeys(addresString);
+
+                WebElement addButton = driver.findElement(By.xpath("//button[normalize-space(text()) = 'Add']"));
+
+                if(addButton.isEnabled()){
+                    
+                    addButton.click();
+
+                    return true;
+
+                }
+
+            }
+            
             return false;
+
         } catch (Exception e) {
             System.out.println("Exception occurred while entering address: " + e.getMessage());
             return false;
@@ -50,8 +72,24 @@ public class Checkout {
              * Iterate through all the address boxes to find the address box with matching
              * text, addressToSelect and click on it
              */
+            List<WebElement> addressOptions = driver.findElements(By.xpath("//div[contains(@class, 'address-item')]"));
+
+            for(WebElement address : addressOptions){
+                
+                if(address.findElement(By.xpath(".//p")).getText().trim().equals(addressToSelect)){
+                    
+                    address.findElement(By.xpath(".//span//input")).click();
+                    
+                    return true;
+                
+                }
+
+            }
+
             System.out.println("Unable to find the given address");
+
             return false;
+
         } catch (Exception e) {
             System.out.println("Exception Occurred while selecting the given address: " + e.getMessage());
             return false;
@@ -66,6 +104,17 @@ public class Checkout {
         try {
             // TODO: CRIO_TASK_MODULE_TEST_AUTOMATION - TEST CASE 05: MILESTONE 4
             // Find the "PLACE ORDER" button and click on it
+
+            WebElement placeOrderButton = driver.findElement(By.xpath("//button[normalize-space(text()) = 'PLACE ORDER']"));
+
+            if(placeOrderButton.isEnabled()){
+                
+                placeOrderButton.click();
+            
+                return true;
+
+            }
+
             return false;
 
         } catch (Exception e) {
@@ -80,7 +129,17 @@ public class Checkout {
     public Boolean verifyInsufficientBalanceMessage() {
         try {
             // TODO: CRIO_TASK_MODULE_TEST_AUTOMATION - TEST CASE 07: MILESTONE 6
+
+            WebElement message = driver.findElement(By.xpath("//div[contains(@id, 'notistack-snackbar')]"));
+
+            if(message.getText().trim().equalsIgnoreCase("You do not have enough balance in your wallet for this purchase")){
+                
+                return true;
+
+            }
+
             return false;
+        
         } catch (Exception e) {
             System.out.println("Exception while verifying insufficient balance message: " + e.getMessage());
             return false;
