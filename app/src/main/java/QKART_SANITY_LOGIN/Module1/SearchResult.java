@@ -23,6 +23,7 @@ public class SearchResult {
      */
     public String getTitleofResult() {
         String titleOfSearchResult = "";
+<<<<<<< ours
         // TODO: CRIO_TASK_MODULE_TEST_AUTOMATION - TEST CASE 03: MILESTONE 1
         // Find the element containing the title (product name) of the search result and
         // assign the extract title text to titleOfSearchResult
@@ -30,6 +31,9 @@ public class SearchResult {
 
         return titleOfSearchResult;
 
+=======
+        return titleOfSearchResult;
+>>>>>>> theirs
     }
 
     /*
@@ -38,6 +42,7 @@ public class SearchResult {
     public Boolean openSizechart() {
         try {
 
+<<<<<<< ours
             // TODO: CRIO_TASK_MODULE_TEST_AUTOMATION - TEST CASE 04: MILESTONE 2
             // Find the link of size chart in the parentElement and click on it
 
@@ -49,6 +54,9 @@ public class SearchResult {
 
             return true;
 
+=======
+            return true;
+>>>>>>> theirs
         } catch (Exception e) {
             System.out.println("Exception while opening Size chart: " + e.getMessage());
             return false;
@@ -87,6 +95,7 @@ public class SearchResult {
              * the element is "SIZE CHART". If the text "SIZE CHART" matches for the
              * element, set status = true , else set to false
              */
+<<<<<<< ours
 
              WebElement sizeChartButton = this.parentElement.findElement(By.xpath(".//button"));
 
@@ -98,6 +107,9 @@ public class SearchResult {
 
             return status;
 
+=======
+            return status;
+>>>>>>> theirs
         } catch (Exception e) {
             return status;
         }
@@ -176,6 +188,7 @@ public class SearchResult {
     public Boolean verifyExistenceofSizeDropdown(WebDriver driver) {
         Boolean status = false;
         try {
+<<<<<<< ours
             // TODO: CRIO_TASK_MODULE_TEST_AUTOMATION - TEST CASE 04: MILESTONE 2
             // If the size dropdown exists and is displayed return true, else return false
 
@@ -185,6 +198,9 @@ public class SearchResult {
 
             return status;
 
+=======
+            return status;
+>>>>>>> theirs
         } catch (Exception e) {
             return status;
         }

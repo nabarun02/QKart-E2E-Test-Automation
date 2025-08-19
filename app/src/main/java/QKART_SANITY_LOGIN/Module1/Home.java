@@ -29,6 +29,7 @@ public class Home {
             WebElement logout_button = driver.findElement(By.className("MuiButton-text"));
             logout_button.click();
 
+            // SLEEP_STMT_10: Wait for Logout to complete
             // Wait for Logout to Complete
             Thread.sleep(3000);
 
@@ -45,6 +46,7 @@ public class Home {
      */
     public Boolean searchForProduct(String product) {
         try {
+<<<<<<< ours
             // TODO: CRIO_TASK_MODULE_TEST_AUTOMATION - TEST CASE 03: MILESTONE 1
             // Clear the contents of the search box and Enter the product name in the search
             // box
@@ -58,6 +60,9 @@ public class Home {
 
             return true;
 
+=======
+            return true;
+>>>>>>> theirs
         } catch (Exception e) {
             System.out.println("Error while searching for a product: " + e.getMessage());
             return false;
@@ -71,6 +76,7 @@ public class Home {
         List<WebElement> searchResults = new ArrayList<WebElement>() {
         };
         try {
+<<<<<<< ours
             // TODO: CRIO_TASK_MODULE_TEST_AUTOMATION - TEST CASE 03: MILESTONE 1
             // Find all webelements corresponding to the card content section of each of
             // search results
@@ -79,6 +85,9 @@ public class Home {
 
             return searchResults;
 
+=======
+            return searchResults;
+>>>>>>> theirs
         } catch (Exception e) {
             System.out.println("There were no search results: " + e.getMessage());
             return searchResults;
@@ -91,6 +100,7 @@ public class Home {
      */
     public Boolean isNoResultFound() {
         Boolean status = false;
+<<<<<<< ours
        
         try {
             // TODO: CRIO_TASK_MODULE_TEST_AUTOMATION - TEST CASE 03: MILESTONE 1
@@ -102,6 +112,10 @@ public class Home {
 
             return status;
 
+=======
+        try {
+            return status;
+>>>>>>> theirs
         } catch (Exception e) {
             return status;
         }
@@ -121,6 +135,7 @@ public class Home {
              * 
              * Return true if these operations succeeds
              */
+<<<<<<< ours
 
             List<WebElement> products = driver.findElements(By.xpath("//div[contains(@class,'MuiPaper-root')]"));
 
@@ -142,6 +157,10 @@ public class Home {
 
             return false;
 
+=======
+            System.out.println("Unable to find the given product");
+            return false;
+>>>>>>> theirs
         } catch (Exception e) {
             System.out.println("Exception while performing add to cart: " + e.getMessage());
             return false;
@@ -154,6 +173,7 @@ public class Home {
     public Boolean clickCheckout() {
         Boolean status = false;
         try {
+<<<<<<< ours
             // TODO: CRIO_TASK_MODULE_TEST_AUTOMATION - TEST CASE 05: MILESTONE 4
             // Find and click on the the Checkout button
 
@@ -166,6 +186,9 @@ public class Home {
             
             return status;
 
+=======
+            return status;
+>>>>>>> theirs
         } catch (Exception e) {
             System.out.println("Exception while clicking on Checkout: " + e.getMessage());
             return status;
@@ -178,6 +201,7 @@ public class Home {
      */
     public Boolean changeProductQuantityinCart(String productName, int quantity) {
         try {
+<<<<<<< ours
             // TODO: CRIO_TASK_MODULE_TEST_AUTOMATION - TEST CASE 06: MILESTONE 5
 
             // Find the item on the cart with the matching productName
@@ -238,6 +262,13 @@ public class Home {
 
             return false;
 
+=======
+
+
+
+
+            return false;
+>>>>>>> theirs
         } catch (Exception e) {
             if (quantity == 0)
                 return true;

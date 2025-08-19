@@ -32,6 +32,7 @@ public class Checkout {
              * Click on the "Add new address" button, enter the addressString in the address
              * text box and click on the "ADD" button to save the address
              */
+<<<<<<< ours
 
             WebElement addNewAddress = driver.findElement(By.xpath("//button[contains(@id,'add-new-btn')]"));
 
@@ -55,6 +56,9 @@ public class Checkout {
             
             return false;
 
+=======
+            return false;
+>>>>>>> theirs
         } catch (Exception e) {
             System.out.println("Exception occurred while entering address: " + e.getMessage());
             return false;
@@ -72,6 +76,7 @@ public class Checkout {
              * Iterate through all the address boxes to find the address box with matching
              * text, addressToSelect and click on it
              */
+<<<<<<< ours
             List<WebElement> addressOptions = driver.findElements(By.xpath("//div[contains(@class, 'address-item')]"));
 
             for(WebElement address : addressOptions){
@@ -90,6 +95,10 @@ public class Checkout {
 
             return false;
 
+=======
+            System.out.println("Unable to find the given address");
+            return false;
+>>>>>>> theirs
         } catch (Exception e) {
             System.out.println("Exception Occurred while selecting the given address: " + e.getMessage());
             return false;
@@ -128,6 +137,7 @@ public class Checkout {
      */
     public Boolean verifyInsufficientBalanceMessage() {
         try {
+<<<<<<< ours
             // TODO: CRIO_TASK_MODULE_TEST_AUTOMATION - TEST CASE 07: MILESTONE 6
 
             WebElement message = driver.findElement(By.xpath("//div[contains(@id, 'notistack-snackbar')]"));
@@ -140,6 +150,9 @@ public class Checkout {
 
             return false;
         
+=======
+            return false;
+>>>>>>> theirs
         } catch (Exception e) {
             System.out.println("Exception while verifying insufficient balance message: " + e.getMessage());
             return false;

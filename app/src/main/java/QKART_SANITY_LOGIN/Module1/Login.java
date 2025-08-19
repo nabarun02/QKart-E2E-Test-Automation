@@ -46,6 +46,7 @@ public class Login {
         // Click the login Button
         login_button.click();
 
+        // SLEEP_STMT_13: Wait for Login to Complete
         // Wait for Login action to complete
         Thread.sleep(5000);
 
