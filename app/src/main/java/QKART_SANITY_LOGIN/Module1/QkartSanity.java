@@ -774,9 +774,37 @@ public class QkartSanity {
         }
 
         driver.switchTo().frame(adIframes.get(0));
-        
         driver.findElement(By.xpath("//button[text()='Buy Now']")).click();
+        driver.switchTo().defaultContent();
 
+        driver.navigate().back();
+
+        wait.until(ExpectedConditions.urlContains("/thanks"));
+
+        adIframes = driver.findElements(By.tagName("iframe"));
+
+        driver.switchTo().frame(adIframes.get(0));
+        driver.findElement(By.xpath("//button[text()='View Cart']")).click();
+        driver.switchTo().defaultContent();
+
+        driver.navigate().back();
+
+        wait.until(ExpectedConditions.urlContains("/thanks"));
+
+        adIframes = driver.findElements(By.tagName("iframe"));
+
+        driver.switchTo().frame(adIframes.get(1));
+        driver.findElement(By.xpath("//button[text()='Buy Now']")).click();
+        driver.switchTo().parentFrame();
+
+        driver.navigate().back();
+
+        wait.until(ExpectedConditions.urlContains("/thanks"));
+
+        adIframes = driver.findElements(By.tagName("iframe"));
+
+        driver.switchTo().frame(adIframes.get(1));
+        driver.findElement(By.xpath("//button[text()='View Cart']")).click();
         driver.switchTo().defaultContent();
         
         // 10. Final check on ad counts
@@ -787,11 +815,11 @@ public class QkartSanity {
             logStatus("Verification Failure", "Ad count mismatch: QKART ads: " + qkartAds + ", Corona ads: " + coronaStatsAds, "FAIL");
         }
 
-        // homePage.navigateToHome();
+        homePage.navigateToHome();
         
-        // Thread.sleep(3000);
+        Thread.sleep(3000);
 
-        // homePage.PerformLogout();
+        homePage.PerformLogout();
         
         logStatus("End TestCase", "Test Case 11: Ad verification on Thanks page completed", status ? "PASS" : "FAIL");
 
@@ -809,6 +837,7 @@ public class QkartSanity {
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
         try {
+            
             // // Execute Test Case 1
             totalTests += 1;
             status = TestCase01(driver);
