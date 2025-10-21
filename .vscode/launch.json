@@ -22,7 +22,9 @@
             "name": "Debug (Launch)-App<QKART_SANITY_LOGIN>",
             "request": "launch",
             "mainClass": "QKART_SANITY_LOGIN.Module1.QkartSanity",
+            # CRIO_SOLUTION_AND_STUB_START_MODULE_XPATH
             "mainClass": "QKART_SANITY_LOGIN.Module4.QkartSanityV2",
+            # CRIO_SOLUTION_AND_STUB_END_MODULE_XPATH
             "preLaunchTask": "selenium-start"
         }
     ]
