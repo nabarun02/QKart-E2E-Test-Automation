@@ -45,6 +45,7 @@ test.dependsOn gitConfig, runZalenium
 test {
     useTestNG() {
         useDefaultListeners = true
+        suites "src/test/java/QKART_TESTNG/testng.xml"
     }
 
     afterSuite { desc, result ->
