@@ -1,19 +1,20 @@
 package QKART_TESTNG.pages;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Home {
-    RemoteWebDriver driver;
+    ChromeDriver driver;
     String url = "https://crio-qkart-frontend-qa.vercel.app";
 
-    public Home(RemoteWebDriver driver) {
+    public Home(ChromeDriver driver) {
         this.driver = driver;
     }
 
@@ -29,7 +30,7 @@ public class Home {
             WebElement logout_button = driver.findElement(By.className("MuiButton-text"));
             logout_button.click();
 
-            WebDriverWait wait = new WebDriverWait(driver, 30);
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
             wait.until(ExpectedConditions.invisibilityOfElementWithText(By.className("css-1urhf6j"), "Logout"));
 
             return true;
@@ -51,7 +52,7 @@ public class Home {
             searchBox.clear();
             searchBox.sendKeys(product);
 
-            WebDriverWait wait = new WebDriverWait(driver, 30);
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
             wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(String
                     .format("//div[@class='MuiCardContent-root css-1qw96cp'][1]/p[contains(text(),'%s')]", product))));
             Thread.sleep(3000);
@@ -71,7 +72,7 @@ public class Home {
         try {
             // Find all webelements corresponding to the card content section of each of
             // search results
-            searchResults = driver.findElementsByClassName("css-1qw96cp");
+            searchResults = driver.findElements(By.className("css-1qw96cp"));
             return searchResults;
         } catch (Exception e) {
             System.out.println("There were no search results: " + e.getMessage());
@@ -86,7 +87,7 @@ public class Home {
     public Boolean isNoResultFound() {
         Boolean status = false;
         try {
-            status = driver.findElementByXPath("//h4[text()=' No products found ']").isDisplayed();
+            status = driver.findElement(By.xpath("//h4[text()=' No products found ']")).isDisplayed();
             return status;
         } catch (Exception e) {
             return status;
@@ -106,12 +107,12 @@ public class Home {
              * 
              * Return true if these operations succeeds
              */
-            List<WebElement> gridContent = driver.findElementsByClassName("css-sycj1h");
+            List<WebElement> gridContent = driver.findElements(By.className("css-sycj1h"));
             for (WebElement cell : gridContent) {
                 if (productName.contains(cell.findElement(By.className("css-yg30e6")).getText())) {
                     cell.findElement(By.tagName("button")).click();
 
-                    WebDriverWait wait = new WebDriverWait(driver, 30);
+                    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
                     wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(
                             String.format("//*[@class='MuiBox-root css-1gjj37g']/div[1][text()='%s']", productName))));
                     return true;
@@ -193,8 +194,8 @@ public class Home {
      */
     public Boolean verifyCartContents(List<String> expectedCartContents) {
         try {
-            List<WebElement> cartContents = driver.findElementsByXPath(
-                    "//div[@class='MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3 css-1q5pok1']//div[@class='MuiBox-root css-1gjj37g']/div[not(@class)]");
+            List<WebElement> cartContents = driver.findElements(By.xpath(
+                    "//div[@class='MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3 css-1q5pok1']//div[@class='MuiBox-root css-1gjj37g']/div[not(@class)]"));
             ArrayList<String> actualCartContents = new ArrayList<String>() {
 
             };

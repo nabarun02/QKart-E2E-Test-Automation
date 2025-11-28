@@ -1,4 +1,3 @@
- 
 plugins {
     id 'java'
 }
@@ -8,43 +7,33 @@ plugins {
 // Apply the java plugin to add support for Java
 apply plugin: 'java'
 apply plugin: 'application'
+apply plugin: 'checkstyle'
 
 
 group 'org.example'
 version '1.0-SNAPSHOT'
-
-sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    implementation group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '4.4.3'
-    implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.0.0-alpha-1'
-    testImplementation group: 'org.testng', name: 'testng', version: '7.6.0'
+
+    testImplementation 'org.testng:testng:6.9.10'
+
+    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
+    implementation 'org.seleniumhq.selenium:selenium-java:4.21.0'
+
+    implementation 'commons-io:commons-io:2.11.0'
+
 
 }
 
-// Additional config for Crio workspace
-buildDir = '/tmp/external_build'
-
-task gitConfig(type:Exec) {
-    // This is ensures correct merge driver (Along with the zalenium run setup)
-    commandLine 'git', 'config', '--local', 'merge.autoselect-nonempty.driver', 'chmod +x __CRIO__/merge_drivers/autoselect-nonempty && __CRIO__/merge_drivers/autoselect-nonempty %O %A %B %P'
-}
-
-task runZalenium(type:Exec) {   
-    commandLine '../selenium-run.sh'
-}
-
-run.dependsOn gitConfig, runZalenium
-test.dependsOn gitConfig, runZalenium
+buildDir = 'build'
 
 test {
     useTestNG() {
-        useDefaultListeners = true
+        useDefaultListeners = true // generates the test report
         suites "src/test/java/QKART_TESTNG/testng.xml"
     }
 
@@ -71,4 +60,23 @@ test {
 
 }
 
-mainClassName = 'QKART_SANITY_LOGIN.Module1.QkartSanity'
+mainClassName = 'QKART_TESTNG.QKART_Tests'
+
+checkstyle {
+    toolVersion = '8.45' // Check for the latest version compatible with your setup
+    config = rootProject.resources.text.fromFile('__CRIO__/checkstyle.xml')
+    sourceSets = [sourceSets.test]
+    ignoreFailures = true
+}
+
+tasks.withType(Checkstyle) {
+    reports {
+            xml.required = true
+            html.required = false
+        }
+}
+
+test {
+    dependsOn assemble
+    mustRunAfter clean
+}

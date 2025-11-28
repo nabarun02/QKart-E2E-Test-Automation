@@ -11,6 +11,7 @@ import static org.testng.Assert.*;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -23,27 +24,45 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.BrowserType;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.chrome.ChromeDriverService;
+import org.openqa.selenium.logging.LoggingPreferences;
+import org.openqa.selenium.logging.LogType;
+import java.util.logging.Level;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import org.testng.annotations.Test;
 
 public class QKART_Tests {
 
-    static RemoteWebDriver driver;
+    static ChromeDriver driver;
     public static String lastGeneratedUserName;
 
     @BeforeSuite(alwaysRun = true)
     public static void createDriver() throws MalformedURLException {
-        // Launch Browser using Zalenium
-        final DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setBrowserName(BrowserType.CHROME);
-        driver = new RemoteWebDriver(new URL("http://localhost:8082/wd/hub"), capabilities);
-        System.out.println("createDriver()");
+        
+        System.setProperty("java.util.logging.config.file", "logging.properties");
+
+        // NOT NEEDED FOR SELENIUM MANAGER
+        // WebDriverManager.chromedriver().timeout(30).setup();
+
+        ChromeOptions options = new ChromeOptions();
+        LoggingPreferences logs = new LoggingPreferences();
+
+        logs.enable(LogType.BROWSER, Level.ALL);
+        logs.enable(LogType.DRIVER, Level.ALL);
+        options.setCapability("goog:loggingPrefs", logs);
+        options.addArguments("--remote-allow-origins=*");
+
+        System.setProperty(ChromeDriverService.CHROME_DRIVER_LOG_PROPERTY, "build/chromedriver.log"); 
+
+        driver = new ChromeDriver(options);
+
+        driver.manage().window().maximize();
+
     }
 
     /*
@@ -259,7 +278,7 @@ public class QKART_Tests {
         // Place the order
         checkoutPage.placeOrder();
 
-        WebDriverWait wait = new WebDriverWait(driver, 30);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
         wait.until(ExpectedConditions.urlToBe("https://crio-qkart-frontend-qa.vercel.app/thanks"));
 
         // Check if placing order redirected to the Thansk page
@@ -324,7 +343,7 @@ public class QKART_Tests {
         checkoutPage.placeOrder();
 
         try {
-            WebDriverWait wait = new WebDriverWait(driver, 30);
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
             wait.until(ExpectedConditions.urlToBe("https://crio-qkart-frontend-qa.vercel.app/thanks"));
         } catch (TimeoutException e) {
             System.out.println("Error while placing order in: " + e.getMessage());
@@ -507,7 +526,7 @@ public class QKART_Tests {
 
         contactUs.click();
 
-        WebDriverWait wait = new WebDriverWait(driver, 30);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
         wait.until(ExpectedConditions.invisibilityOf(contactUs));
 
         Assert.assertTrue(true);
@@ -590,18 +609,30 @@ public class QKART_Tests {
     }
 
     public static void takeScreenshot(WebDriver driver, String screenshotType, String description) {
+        
         try {
-            File theDir = new File("/screenshots");
+
+            String basePath = System.getProperty("user.dir") + File.separator + "screenshots";
+            
+            File theDir = new File(basePath);
+            
             if (!theDir.exists()) {
                 theDir.mkdirs();
             }
-            String timestamp = String.valueOf(java.time.LocalDateTime.now());
+            
+            String timestamp = String.valueOf(java.time.LocalDateTime.now()).replace(":", "-").replace(".", "-").replace("T", "-");
             String fileName = String.format("screenshot_%s_%s_%s.png", timestamp, screenshotType, description);
+            
             TakesScreenshot scrShot = ((TakesScreenshot) driver);
+           
             File SrcFile = scrShot.getScreenshotAs(OutputType.FILE);
-            File DestFile = new File("screenshots/" + fileName);
+            File DestFile = new File(basePath + File.separator + fileName);
+            
             FileUtils.copyFile(SrcFile, DestFile);
-        } catch (Exception e) {
+
+        } 
+        
+        catch (Exception e) {
             e.printStackTrace();
         }
     }

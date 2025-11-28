@@ -1,22 +1,23 @@
 package QKART_TESTNG.pages;
 
 import java.sql.Timestamp;
+import java.time.Duration;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Register {
-    RemoteWebDriver driver;
+    ChromeDriver driver;
     String url = "https://crio-qkart-frontend-qa.vercel.app/register";
     public String lastGeneratedUsername = "";
 
-    public Register(RemoteWebDriver driver) {
+    public Register(ChromeDriver driver) {
         this.driver = driver;
     }
 
@@ -71,7 +72,7 @@ public class Register {
         register_now_button.click();
 
         try {
-            WebDriverWait wait = new WebDriverWait(driver, 30);
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
             wait.until(ExpectedConditions.or(
                 ExpectedConditions.urlToBe("https://crio-qkart-frontend-qa.vercel.app/login")));
         } catch (TimeoutException e) {

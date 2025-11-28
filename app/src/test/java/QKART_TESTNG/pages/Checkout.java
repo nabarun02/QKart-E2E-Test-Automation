@@ -1,18 +1,19 @@
 package QKART_TESTNG.pages;
 
+import java.time.Duration;
 import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Checkout {
-    RemoteWebDriver driver;
+    ChromeDriver driver;
     String url = "https://crio-qkart-frontend-qa.vercel.app/checkout";
 
-    public Checkout(RemoteWebDriver driver) {
+    public Checkout(ChromeDriver driver) {
         this.driver = driver;
     }
 
@@ -42,7 +43,7 @@ public class Checkout {
             for (WebElement button : buttons) {
                 if (button.getText().equals("ADD")) {
                     button.click();
-                    WebDriverWait wait = new WebDriverWait(driver, 30);
+                    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
                     wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(String.format(
                             "//*[@class='MuiTypography-root MuiTypography-body1 css-yg30e6' and text()='%s']",
                             addresString))));
@@ -67,9 +68,9 @@ public class Checkout {
              * Iterate through all the address boxes to find the address box with matching
              * text, addressToSelect and click on it
              */
-            WebElement address = driver.findElementByXPath(
+            WebElement address = driver.findElement(By.xpath(
                     String.format("//p[@class = 'MuiTypography-root MuiTypography-body1 css-yg30e6' and text()= '%s']",
-                            addressToSelect));
+                            addressToSelect)));
             address.click();
 
             return false;
@@ -85,7 +86,7 @@ public class Checkout {
      */
     public Boolean placeOrder() {
         try {
-            WebElement placeOrder = driver.findElementByXPath("//button[text()='PLACE ORDER']");
+            WebElement placeOrder = driver.findElement(By.xpath("//button[text()='PLACE ORDER']"));
             placeOrder.click();
             return true;
 

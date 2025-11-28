@@ -1,5 +1,6 @@
 package QKART_TESTNG.pages;
 
+import java.time.Duration;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -62,7 +63,7 @@ public class SearchResult {
             action.sendKeys(Keys.ESCAPE);
             action.perform();
 
-            WebDriverWait wait = new WebDriverWait(driver, 30);
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
             wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("MuiDialog-paperScrollPaper")));
 
             return true;
